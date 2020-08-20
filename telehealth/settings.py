@@ -124,3 +124,11 @@ STATIC_URL = "/static/"
 
 # Channels
 ASGI_APPLICATION = "telehealth.routing.application"
+
+
+# In-Memory Channel Layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
