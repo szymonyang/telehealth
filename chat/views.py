@@ -8,6 +8,6 @@ def index(request):
 
 
 def room(request, room_name):
-    return render(request, "chat/room.html", {
+    return render(request, "chat/room_boilterplate.html", {
         "room_name": room_name
     })
