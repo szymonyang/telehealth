@@ -9,10 +9,10 @@ from chat.models import Message, User
 
 
 class ChatConsumer(WebsocketConsumer):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        self.room_group_name = "chat_%s" % self.room_name
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+    #     self.room_group_name = "chat_%s" % self.room_name
 
     def fetch_message(self, data):
         messages = Message.last_10_messages()
@@ -54,7 +54,8 @@ class ChatConsumer(WebsocketConsumer):
 
     def connect(self):
         # Join room group
-
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_group_name = 'chat_%s' % self.room_name
         print(self.room_group_name, self.channel_name)
 
         async_to_sync(self.channel_layer.group_add)(
@@ -74,7 +75,7 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         data = json.loads(text_data)
         print(data)
-        self.commands[data["commands"]](self, data)
+        self.commands[data["command"]](self, data)
 
     def send_chat_message(self, message):
         # Send message to room group
