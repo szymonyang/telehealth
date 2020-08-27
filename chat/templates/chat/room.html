@@ -7,12 +7,12 @@
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https:/netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="{% static 'chat/css/style.css' %}" />
   </head>
 
@@ -37,7 +37,7 @@
             <input name="twitter" type="text" value="mikeross" />
             <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
             <input name="twitter" type="text" value="ross81" />
-            <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+            <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i> </label>
             <input name="twitter" type="text" value="mike.ross" />
           </div>
         </div>
@@ -109,11 +109,9 @@
     </div>
   </div>
 
-{#<script src="{% static 'chat/js/main.js' %}"></script>#}
+<script src="{% static 'chat/js/main.js' %}"></script>
 <script src="{% static 'chat/js/reconnecting-websocket.js' %}"></script>
-{#  {{ room_name|json_script:"room-name" }}#}
-<qaw>1</qaw>
-  <script>
+<script>
     var roomName = {{ room_name_json }};
     var username = {{ username }};
 
@@ -121,9 +119,10 @@
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
 
-    {#chatSocket.onopen = function(e) {#}
-    {#  fetchMessages();#}
-    {#}#}
+    chatSocket.onopen = function(e) {
+        console.log(e)
+        fetchMessages();
+    }
 
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
@@ -159,7 +158,7 @@
     };
 
     function fetchMessages() {
-      chatSocket.send(JSON.stringify({'command': 'fetch_message' }));
+      chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
     }
 
     function createMessage(data) {
